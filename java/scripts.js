@@ -16,39 +16,70 @@ function computerPlay () {
 Once a valid response is inputed, it will execute computerPlay.
 It will compare playerSelection to computerSelection with two IF statements and output the proper string to declare winner/loser/draw*/
 
-function playRound(roundResult) {
+function playRound() {
     let playerPick = prompt(`Rock? Paper? or Scissors?`);
     let playerSelection = playerPick.toLowerCase();
     let computerSelection = computerPlay();
     if (playerSelection === `rock`) {
         if (computerSelection === 'rock') {
-            roundResult = `Draw! Two Rocks`;
+            alert(`Draw! Two Rocks`);
+            roundResult = 0;
         } else if (computerSelection === `paper`) {
-            roundResult = 'You Lose! Paper beats Rock'; 
+            alert(`You Lose! Paper beats Rock`);
+            roundResult = -1;
         } else if (computerSelection === 'scissors'){
-            roundResult = `You Win! Rock beats Scissors`;
+            alert(`You Win! Rock beats Scissors`);
+            roundResult = 1;
         }
     } else if (playerSelection === `paper`) {
-        if (computerSelection === 'rock') {
-            roundResult = `You Win! Paper beats Rock`;
+        if (computerSelection === `rock`) {
+            alert(`You Win! Paper beats Rock`);
+            roundResult = 1;
         } else if (computerSelection === `paper`) {
-            roundResult = 'Draw! Two Papers'; 
+            alert(`Draw! Two Papers`); 
+            roundResult = 0;
         } else if (computerSelection === 'scissors'){
-            roundResult = `You Lose! Scissors beats Paper`;
+            alert(`You Lose! Scissors beats Paper`);
+            roundResult = -1;
         }
     } else if (playerSelection === `scissors`) {
         if (computerSelection === 'rock') {
-            roundResult = `You Lose! Rock beats Scissors`;
+            alert(`You Lose! Rock beats Scissors`);
+            roundResult = -1;
         } else if (computerSelection === `paper`) {
-            roundResult = 'You Win! Scissors beats Paper'; 
-        } else if (computerSelection === 'scissors'){
-            roundResult = `Draw! Two Scissors`;
+            alert(`You Win! Scissors beats Paper`); 
+            roundResult = 1;
+        } else if (computerSelection === `scissors`){
+            alert(`Draw! Two Scissors`);
+            roundResult = 0;
         }
     } else {
-        alert("invalid input");
-        return;
+        alert(`invalid input`);
+        roundResult = 99;
     }
     return roundResult;
 };
 
-alert(playRound());
+/*game() will create a loop that lets the user play 5 rounds against the computer.
+    If the user enteres a invalid input it will not count as a round.
+    The game will keep score and report a winner or loser at the end.*/
+function game(totalScore = 0) {
+    for (let i = 0; i < 5; i++) {
+        playRound();
+        if (roundResult === 99) {
+            i--;
+            totalScore -= 99;
+        }
+    totalScore += roundResult;
+    console.log(totalScore);
+    }
+    if (totalScore > 0) {
+        alert('YOU ARE A WINNER!');
+    } else if (totalScore < 0) {
+        alert('YOU ARE A LOSER!');
+    } else {
+        alert('GAME DRAW! BORING!!!');
+    }
+} 
+
+game();
